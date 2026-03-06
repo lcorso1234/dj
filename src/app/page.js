@@ -55,6 +55,8 @@ export default function Home() {
     })}`;
   }, []);
 
+  const djSmsTarget = useMemo(() => normalizePhone(DJ_CONTACT.phone), []);
+
   function saveDjAndPrompt() {
     const link = document.createElement("a");
     link.href = djVcardPath;
@@ -84,10 +86,9 @@ export default function Home() {
 
     const origin = window.location.origin;
     const shareableSenderCard = `${origin}/api/vcard?${shareQuery}`;
-    const shareableDjCard = `${origin}${djVcardPath}`;
 
     const messageBody = deviceProfile.samsung
-      ? `Added to DJ Wabick's network. My contact card: ${shareableSenderCard} DJ card: ${shareableDjCard}`
+      ? `Added to DJ Wabick's network. My contact card: ${shareableSenderCard}`
       : [
           "You were just added to DJ Wabick's network.",
           "",
@@ -96,11 +97,12 @@ export default function Home() {
           `My phone: ${normalizedPhone}`,
           "",
           `Save my contact: ${shareableSenderCard}`,
-          `Save DJ's contact: ${shareableDjCard}`,
         ].join("\n");
 
     const encodedBody = encodeURIComponent(messageBody);
-    const smsUri = deviceProfile.ios ? `sms:&body=${encodedBody}` : `sms:?body=${encodedBody}`;
+    const smsUri = deviceProfile.ios
+      ? `sms:${djSmsTarget}&body=${encodedBody}`
+      : `sms:${djSmsTarget}?body=${encodedBody}`;
 
     window.location.href = smsUri;
   }
@@ -142,8 +144,8 @@ export default function Home() {
           <section className="text-form-wrap" aria-live="polite">
             <h3>Send Automated Intro Text</h3>
             <p>
-              Fill in your info, then your phone&apos;s SMS app opens with a prefilled message and shareable contact
-              links.
+              Fill in your info, then your phone&apos;s SMS app opens with a prefilled message and one shareable
+              contact link.
             </p>
 
             <form className="text-form" onSubmit={openSmsComposer}>
@@ -188,7 +190,7 @@ export default function Home() {
 
             <p className="compat-note">
               Compatibility tweak active: Samsung Messages uses a compact one-line template for better URL handling;
-              iOS uses an `sms:&body=` deep link optimized for Contacts import flow.
+              iOS uses a recipient-targeted `sms:number&body=` deep link optimized for Contacts import flow.
             </p>
           </section>
         ) : null}
