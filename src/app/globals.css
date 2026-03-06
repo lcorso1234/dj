@@ -169,27 +169,10 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.72rem;
   font-size: 1rem;
   font-weight: 800;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-}
-
-.cta-thumb {
-  width: 44px;
-  height: 44px;
-  border-radius: 11px;
-  overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.35);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.22);
-  flex-shrink: 0;
-}
-
-.cta-thumb-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 .save-cta:active {

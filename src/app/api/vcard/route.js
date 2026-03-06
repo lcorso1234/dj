@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { readFileSync } from "node:fs";
+import path from "node:path";
 
 function cleanValue(value = "") {
   return String(value).replace(/[\r\n]/g, " ").trim();
@@ -16,6 +18,30 @@ function escapeVcard(value = "") {
     .replace(/,/g, "\\,");
 }
 
+function foldVcardLine(line) {
+  const maxLength = 75;
+  const chunks = [];
+  let remaining = line;
+
+  while (remaining.length > maxLength) {
+    chunks.push(remaining.slice(0, maxLength));
+    remaining = ` ${remaining.slice(maxLength)}`;
+  }
+  chunks.push(remaining);
+  return chunks;
+}
+
+function getEmbeddedPhoto(photoKey) {
+  if (photoKey !== "player") return null;
+  try {
+    const imagePath = path.join(process.cwd(), "public", "player-head.jpg");
+    const base64 = readFileSync(imagePath).toString("base64");
+    return foldVcardLine(`PHOTO;ENCODING=b;TYPE=JPEG:${base64}`);
+  } catch {
+    return null;
+  }
+}
+
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
 
@@ -25,7 +51,9 @@ export async function GET(request) {
   const phone = cleanValue(searchParams.get("phone") || "").replace(/[^\d+]/g, "");
   const company = cleanValue(searchParams.get("company") || "President");
   const notes = cleanValue(searchParams.get("notes") || "It's all in the wrists.");
+  const photo = cleanValue(searchParams.get("photo") || "");
   const filename = cleanFileName(searchParams.get("filename") || `${firstName}-${lastName}.vcf`);
+  const photoLines = getEmbeddedPhoto(photo);
 
   const fullName = [firstName, lastName].filter(Boolean).join(" ") || "Contact";
 
@@ -36,6 +64,7 @@ export async function GET(request) {
     `FN:${escapeVcard(fullName)}`,
     `ORG:${escapeVcard(company)}`,
     "TITLE:Baseball Player",
+    ...(photoLines || []),
     phone ? `TEL;TYPE=CELL,VOICE:${escapeVcard(phone)}` : "",
     email ? `EMAIL;TYPE=INTERNET:${escapeVcard(email)}` : "",
     notes ? `NOTE:${escapeVcard(notes)}` : "",

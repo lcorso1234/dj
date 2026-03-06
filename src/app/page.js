@@ -50,6 +50,7 @@ export default function Home() {
       phone: DJ_CONTACT.phone,
       company: DJ_CONTACT.company,
       notes: DJ_CONTACT.notes,
+      photo: "player",
       filename: "DJ-Wabick.vcf",
     })}`;
   }, []);
@@ -128,9 +129,6 @@ export default function Home() {
             onClick={saveDjAndPrompt}
             aria-label="Save DJ contact and open text flow"
           >
-            <span className="cta-thumb" aria-hidden="true">
-              <Image src="/player.jpg" alt="" width={52} height={52} className="cta-thumb-img" />
-            </span>
             <span className="cta-text">Save Contact + Start Text</span>
           </button>
 
