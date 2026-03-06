@@ -81,6 +81,7 @@ export default function Home() {
       email: senderEmail.trim(),
       company: "DJ Network",
       notes: `Introduced through DJ Wabick's network.`,
+      photo: "player",
       filename: `${firstName}-${lastName}.vcf`,
     });
 
