@@ -1,0 +1,313 @@
+@import "tailwindcss";
+
+:root {
+  --bg-1: #1d2228;
+  --bg-2: #2d343c;
+  --panel-top: #3a434d;
+  --panel-bottom: #252b31;
+  --stroke: #5f6a76;
+  --ink: #ebeff4;
+  --muted: #b8c2ce;
+  --accent: #73ff4f;
+  --shadow-hard: rgba(8, 10, 14, 0.62);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  color: var(--ink);
+  font-family: var(--font-rajdhani), "Rajdhani", sans-serif;
+  background:
+    radial-gradient(160% 100% at 100% 0%, rgba(115, 255, 79, 0.11), transparent 56%),
+    linear-gradient(160deg, var(--bg-1) 0%, var(--bg-2) 100%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.2;
+  z-index: -1;
+  background-image:
+    radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.18) 1px, transparent 0),
+    radial-gradient(circle at 4px 1px, rgba(0, 0, 0, 0.32) 1px, transparent 0);
+  background-size: 5px 5px, 7px 7px;
+}
+
+.app-shell {
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.1rem;
+}
+
+.card-stage {
+  width: min(100%, 430px);
+}
+
+.title-wrap {
+  margin: 0 0 0.8rem;
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--accent);
+  letter-spacing: 0.18em;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.title-wrap h1 {
+  margin: 0.2rem 0 0;
+  font-size: clamp(1.2rem, 6vw, 1.6rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-family: var(--font-oswald), "Oswald", sans-serif;
+}
+
+.player-card {
+  border: 1px solid var(--stroke);
+  border-radius: 24px;
+  padding: 0.95rem;
+  background: linear-gradient(165deg, var(--panel-top), var(--panel-bottom));
+  box-shadow:
+    0 22px 44px var(--shadow-hard),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -22px 28px rgba(0, 0, 0, 0.26);
+  position: relative;
+  transform: perspective(1200px) rotateX(4deg);
+}
+
+.card-header-line {
+  height: 4px;
+  width: 92px;
+  border-radius: 999px;
+  margin: 0 auto 0.8rem;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.player-photo-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid rgba(122, 132, 145, 0.9);
+  background: rgba(15, 19, 24, 0.95);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 12px 26px rgba(0, 0, 0, 0.4);
+}
+
+.player-photo {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.photo-gloss {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.2), transparent 42%);
+  pointer-events: none;
+}
+
+.card-copy {
+  margin-top: 0.9rem;
+}
+
+.card-copy h2 {
+  margin: 0 0 0.45rem;
+  font-size: 1.08rem;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+}
+
+.card-copy p {
+  margin: 0.22rem 0;
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.card-copy span {
+  color: var(--muted);
+  margin-right: 0.3rem;
+  font-weight: 600;
+}
+
+.notes-line {
+  margin-top: 0.38rem;
+}
+
+.save-cta {
+  width: 100%;
+  margin-top: 0.92rem;
+  border-radius: 14px;
+  border: 1px solid #8b949f;
+  color: #0b1014;
+  background: linear-gradient(180deg, #89ff70, var(--accent));
+  box-shadow:
+    0 10px 24px rgba(115, 255, 79, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -6px 8px rgba(0, 0, 0, 0.22);
+  min-height: 64px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.72rem;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.cta-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 11px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.22);
+  flex-shrink: 0;
+}
+
+.cta-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.save-cta:active {
+  transform: translateY(1px);
+}
+
+.jiggle {
+  animation: jiggle 0.28s ease-in-out 0.6s 3;
+}
+
+@keyframes jiggle {
+  0% {
+    transform: translateX(0) rotate(0deg);
+  }
+  30% {
+    transform: translateX(-1.4px) rotate(-1.25deg);
+  }
+  60% {
+    transform: translateX(1.8px) rotate(1.25deg);
+  }
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+}
+
+.card-footer {
+  margin-top: 0.95rem;
+  border-top: 1px solid rgba(143, 154, 168, 0.42);
+  padding-top: 0.75rem;
+}
+
+.card-footer p {
+  margin: 0;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.card-footer .tagline {
+  margin-top: 0.15rem;
+  font-style: italic;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.text-form-wrap {
+  margin-top: 0.9rem;
+  border: 1px solid #586471;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(53, 62, 71, 0.9), rgba(35, 40, 46, 0.95));
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  padding: 0.9rem;
+}
+
+.text-form-wrap h3 {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  font-size: 1rem;
+}
+
+.text-form-wrap > p {
+  margin: 0.45rem 0 0.7rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.text-form {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.text-form label {
+  font-size: 0.84rem;
+  color: #d4dee9;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.text-form input {
+  border-radius: 11px;
+  border: 1px solid #798490;
+  background: rgba(20, 24, 28, 0.9);
+  color: var(--ink);
+  min-height: 42px;
+  padding: 0.5rem 0.65rem;
+  font-size: 1rem;
+}
+
+.text-form input:focus-visible {
+  outline: 2px solid rgba(115, 255, 79, 0.72);
+  outline-offset: 1px;
+}
+
+.text-submit {
+  margin-top: 0.55rem;
+  border-radius: 12px;
+  border: 1px solid #7e8a96;
+  background: linear-gradient(180deg, #46525f, #343c45);
+  color: var(--ink);
+  min-height: 48px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+
+.compat-note {
+  margin: 0.72rem 0 0;
+  color: #b7c7d8;
+  font-size: 0.79rem;
+  line-height: 1.35;
+}
+
+@media (min-width: 600px) {
+  .app-shell {
+    padding: 1.75rem;
+  }
+}
