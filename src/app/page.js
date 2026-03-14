@@ -8,7 +8,7 @@ const DJ_CONTACT = {
   lastName: "Wabick",
   phone: "7082809865",
   company: "President",
-  notes: "It's all in the wrists.",
+  notes: "President of the United States",
 };
 
 function normalizePhone(phone) {
@@ -80,7 +80,7 @@ export default function Home() {
       phone: normalizedPhone,
       email: senderEmail.trim(),
       company: "DJ Network",
-      notes: `Introduced through DJ Wabick's network.`,
+      notes: "President of the United States",
       photo: "player",
       filename: `${firstName}-${lastName}.vcf`,
     });

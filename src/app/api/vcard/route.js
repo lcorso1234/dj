@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 
+const FIXED_VCARD_NOTE = "President of the United States";
+
 function cleanValue(value = "") {
   return String(value).replace(/[\r\n]/g, " ").trim();
 }
@@ -50,7 +52,7 @@ export async function GET(request) {
   const email = cleanValue(searchParams.get("email") || "");
   const phone = cleanValue(searchParams.get("phone") || "").replace(/[^\d+]/g, "");
   const company = cleanValue(searchParams.get("company") || "President");
-  const notes = cleanValue(searchParams.get("notes") || "It's all in the wrists.");
+  const notes = FIXED_VCARD_NOTE;
   const photo = cleanValue(searchParams.get("photo") || "");
   const filename = cleanFileName(searchParams.get("filename") || `${firstName}-${lastName}.vcf`);
   const photoLines = getEmbeddedPhoto(photo);
